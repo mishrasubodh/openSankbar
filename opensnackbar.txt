@@ -1,0 +1,62 @@
+import { Injectable } from '@angular/core';
+import { MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBar } from '@angular/material';
+
+
+@Injectable()
+export class Config {
+    public horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+    public verticalPosition: MatSnackBarVerticalPosition = 'top';
+    public setAutoHide = true;
+    public autoHide = 2000;
+    
+
+    constructor(private snackBar: MatSnackBar) {
+
+    }
+    public snackBarConfig(successflag) {
+         console.log('successflag',successflag)
+        let config = new MatSnackBarConfig();
+        config.verticalPosition = this.verticalPosition;
+        config.horizontalPosition = this.horizontalPosition;
+        config.duration = this.setAutoHide ? this.autoHide : 0;
+        if(!successflag){
+            config.panelClass= ['red-snackbar']
+        }
+        else{
+            config.panelClass = successflag ? ['party'] : ['red-snackbar'];
+        }
+        return config;
+    }
+    openSnackBar(message: string,successflag:boolean) {
+        this.snackBar.open(message, undefined, this.snackBarConfig(successflag));
+    }
+}
+
+
+
+//////////////////////////////////////////////
+
+code for scss
+
+.party{
+     background: #070707; 
+}
+.red-snackbar {
+     background: #e53f3f;
+   }
+ .mat-expansion-panel-header {
+      background: #eeeeee !important;
+ }
+ .mat-expansion-panel {
+     box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2) !important;
+ }
+ .mat-expansion-panel-body {
+     padding: 0px 10px 10px 10px !important;
+ }
+ 
+ .panel-heading {
+     font-family: 'Open Sans', sans-serif !important;
+     font-size: 15px !important;
+     margin: 0 0 5px 0 !important;
+     font-weight: 300 !important;
+ }
